@@ -1,64 +1,37 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-/* HOOK REACT EXAMPLE */
+import Registration from './views/Registration';
+
+// ADD TO CLIENT_ROUTES IN SERVER FOR EACH ROUTE PATH!!
 const App = (props: AppProps) => {
-	const [greeting, setGreeting] = useState<string>('');
-
-	useEffect(() => {
-		async function getGreeting() {
-			try {
-				const res = await fetch('/api/hello');
-				const greeting = await res.json();
-				setGreeting(greeting);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		getGreeting();
-	}, []);
-
 	return (
-		<main className="container my-5">
-			<h1 className="text-primary text-center">Hello {greeting}!</h1>
-		</main>
+		<BrowserRouter>
+			<Switch>
+				<Route exact path="/">
+					{() => <h1 className="text-center display-1 mt-5">Home</h1>}
+				</Route>
+				<Route exact path="/registration">
+					<Registration />
+				</Route>
+				<Route exact path="/about">
+					{() => <h1 className="text-center display-1 mt-5">About</h1>}
+				</Route>
+				<Route exact path="/contact">
+					{() => <h1 className="text-center display-1 mt-5">Contact</h1>}
+				</Route>
+				<Route exact path="/oops">
+					{() => (
+						<h1 className="text-center display-1 mt-5">
+							Oops Something Went Wrong! :(
+						</h1>
+					)}
+				</Route>
+			</Switch>
+		</BrowserRouter>
 	);
 };
 
 interface AppProps {}
-
-/* CLASS REACT EXAMPLE */
-// class App extends React.Component<IAppProps, IAppState> {
-// 	constructor(props: IAppProps) {
-// 		super(props);
-// 		this.state = {
-// 			name: null
-// 		};
-// 	}
-
-// 	async componentDidMount() {
-// 		try {
-// 			let r = await fetch('/api/hello');
-// 			let name = await r.json();
-// 			this.setState({ name });
-// 		} catch (error) {
-// 			console.log(error);
-// 		}
-// 	}
-
-// 	render() {
-// 		return (
-// 			<main className="container my-5">
-// 				<h1 className="text-primary text-center">Hello {this.state.name}!</h1>
-// 			</main>
-// 		);
-// 	}
-// }
-
-// export interface IAppProps {}
-
-// export interface IAppState {
-// 	name: string;
-// }
 
 export default App;

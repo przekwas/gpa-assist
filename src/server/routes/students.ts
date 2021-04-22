@@ -8,8 +8,7 @@ router.get('/', async (req, res, next) => {
 		const students = await db.students.all();
 		res.json(students);
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: 'lukes code fucking sucks lol', error: error.message });
+		next(error);
 	}
 });
 
@@ -19,19 +18,7 @@ router.get('/:id', async (req, res, next) => {
 		const [student] = await db.students.one(id);
 		res.json(student);
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: 'lukes code fucking sucks lol', error: error.message });
-	}
-});
-
-router.get('/:id', async (req, res, next) => {
-	try {
-		const id = Number(req.params.id);
-		const [student] = await db.students.one(id);
-		res.json(student);
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: 'lukes code fucking sucks lol', error: error.message });
+		next(error);
 	}
 });
 
@@ -41,19 +28,21 @@ router.delete('/:id', async (req, res, next) => {
 		const badKid = await db.students.destroy(id);
 		res.json(badKid);
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: 'lukes code fucking sucks lol', error: error.message });
+		next(error);
 	}
 });
 
 router.post('/', async (req, res, next) => {
 	try {
 		const newStudent = req.body;
-		const result = await db.students.insert(newStudent.name, newStudent.email, newStudent.password);
+		const result = await db.students.insert(
+			newStudent.name,
+			newStudent.email,
+			newStudent.password
+		);
 		res.json(result);
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: 'lukes code fucking sucks lol', error: error.message });
+		next(error);
 	}
 });
 
@@ -64,8 +53,7 @@ router.put('/:id', async (req, res, next) => {
 		const result = await db.students.update(editedStudent.name, id);
 		res.json(result);
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: 'lukes code fucking sucks lol', error: error.message });
+		next(error);
 	}
 });
 

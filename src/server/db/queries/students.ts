@@ -1,4 +1,4 @@
-import { Query } from '../';
+import { Query } from '../config';
 import type { StudentsTable } from '../models';
 
 const all = () => Query<StudentsTable[]>('SELECT * FROM students');
